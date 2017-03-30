@@ -1,0 +1,5 @@
+[wangyi]
+name=wangyi source 
+baseurl=http://mirrors.163.com/centos/6/os/x86_64/
+gpgcheck=0
+enabled=1
