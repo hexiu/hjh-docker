@@ -1,0 +1,69 @@
+Sending build context to Docker daemon 286.2 kB
+Sending build context to Docker daemon 
+Step 0 : FROM sshd_server:v1
+ ---> 86ec56866e7d
+Step 1 : ADD ./test.list /etc/apt/
+ ---> Using cache
+ ---> fbf24081f842
+Step 2 : RUN apt-get update
+ ---> Using cache
+ ---> b87b455d6e48
+Step 3 : RUN apt-get install -y libmysqld-dev
+ ---> Using cache
+ ---> 51db5f3c7e67
+Step 4 : RUN apt-get install -y dpkg-dev fakeroot pbuilder gnupg dh-make libssl-dev libpcre3-dev git-core
+ ---> Using cache
+ ---> f813b9e54e50
+Step 5 : RUN apt-get install -y build-essential debhelper make autoconf automake patch
+ ---> Using cache
+ ---> 9fb505e7159a
+Step 6 : RUN wget https://www.openssl.org/source/openssl-1.1.0e.tar.gz
+ ---> Using cache
+ ---> d7ff0685f5a2
+Step 7 : RUN tar -xvf openssl-1.1.0e.tar.gz -C /tmp
+ ---> Using cache
+ ---> 8261257ca35d
+Step 8 : RUN mv /tmp/openssl-1.1.0e /usr/local/ssl
+ ---> Using cache
+ ---> 27e0cc169b1a
+Step 9 : ENV LD_LIBRARY_PATH /usr/lib:/usr/local/ssl
+ ---> Using cache
+ ---> 11163158bf58
+Step 10 : RUN wget https://www.isc.org/downloads/file/bind-9-10-5/
+ ---> Using cache
+ ---> 93bac064822a
+Step 11 : RUN mv index.html bind-9-10-5.tar.gz
+ ---> Using cache
+ ---> 99c39f1d4cfa
+Step 12 : RUN tar -xvf bind-9-10-5.tar.gz -C /tmp
+ ---> Using cache
+ ---> ed88512db18a
+Step 13 : WORKDIR /tmp/bind-9.10.5
+ ---> Using cache
+ ---> a6cf9d635ee0
+Step 14 : RUN wget http://nchc.dl.sourceforge.net/project/mysql-bind/mysql-bind/mysql-bind-0.2%20src/mysql-bind.tar.gz
+ ---> Using cache
+ ---> 3207eaffe70d
+Step 15 : RUN tar -xvf mysql-bind.tar.gz -C /tmp
+ ---> Using cache
+ ---> c0e1cd6d4569
+Step 16 : RUN cp -rp /tmp/mysql-bind/mysqldb.c /tmp/mysql-bind/mysqldb.h ./bin/named/
+ ---> Using cache
+ ---> ca54468027b7
+Step 17 : RUN cp -rp /tmp/mysql-bind/mysqldb.c /tmp/mysql-bind/mysqldb.h ./bin/named/include/
+ ---> Using cache
+ ---> 82a53fb7c864
+Step 18 : RUN sed -i "s/DBDRIVER_OBJS = /DBDRIVER_OBJS = mysqldb.@O@ /" ./bin/named/Makefile.in
+ ---> Using cache
+ ---> 6902f7f85de1
+Step 19 : RUN sed -i "s/DBDRIVER_SRCS = /DBDRIVER_SRCS = mysqldb.c /" ./bin/named/Makefile.in
+ ---> Using cache
+ ---> a80e46cc2dfb
+Step 20 : RUN sed -i "s%DBDRIVER_INCLUDES = %DBDRIVER_INCLUDES = -I/usr/include/mysql  -g -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fwrapv -fPIC   -DUNIV_LINUX -DUNIV_LINUX %" ./bin/named/Makefile.in
+ ---> Using cache
+ ---> 4cf6b43551ff
+Step 21 : RUN sed -i "s%DBDRIVER_LIBS = %DBDRIVER_LIBS = -rdynamic -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm -L/usr/lib -lssl -lcrypto %" ./bin/named/Makefile.in
+ ---> Using cache
+ ---> 12dacc9b0531
+Step 22 : RUN mv ./bin/named/main.c ./bin/named/main.c.bak
+ ---> Running in a7562b37218f
