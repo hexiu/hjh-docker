@@ -1,5 +1,5 @@
 #use base images 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 #add author info 
 MAINTAINER axiu axiu@jaxiu.cn 
 #add apt sources.list 
